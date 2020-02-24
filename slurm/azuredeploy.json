@@ -51,17 +51,17 @@
     }
   },
   "variables": {
-    "dnsName": "[concat('slurm-', uniqueString(resourceGroup().id))]",
+    "dnsName": "[ concat('slurm-', uniqueString(resourceGroup().id))]",
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
     "ubuntuOSVersion": "16.04-LTS",
     "publicIPAddressName": "publicip",
-    "vmNameMaster": "master",
-    "vmNameWorker": "worker",
-    "nicNameMaster": "nic",
-    "nicNameWorker": "nic-worker-",
+    "vmNameMaster": "gpusim-master",
+    "vmNameWorker": "gpusim-worker",
+    "nicNameMaster": "gpusim-nic",
+    "nicNameWorker": "gpusim-nic-worker-",
     "networkSettings": {
-      "virtualNetworkName": "virtualnetwork",
+      "virtualNetworkName": "gpusim-virtualnetwork",
       "addressPrefix": "10.0.0.0/16",
       "subnet": {
         "dse": {
@@ -80,7 +80,7 @@
     },
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', variables('networkSettings').virtualNetworkName, variables('networkSettings').subnet.dse.name)]",
     "installationCLI": "[concat('sh azuredeploy.sh ', variables('vmNameMaster'), ' ', variables('networkSettings').statics.master, ' ', variables('vmNameWorker'), ' ', variables('networkSettings').statics.workerRange.base, ' ', variables('networkSettings').statics.workerRange.start, ' ', parameters('scaleNumber'), ' ', parameters('adminUsername'), ' ', parameters('adminPassword'), ' ', parameters('_artifactsLocation'))]",
-    "networkSecurityGroupName": "default-NSG"
+    "networkSecurityGroupName": "gpusim-NSG"
   },
   "resources": [
     {
@@ -172,7 +172,7 @@
           }
         ]
       }
-    },
+    },uri(parameters('_artifactsLocation'), concat('azuredeploy.sh', parameters('_artifactsLocationSasToken')))
     {
       "apiVersion": "2017-03-30",
       "type": "Microsoft.Compute/virtualMachines",
@@ -191,7 +191,7 @@
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
-          "imageReference": {
+          "imaguri(parameters('_artifactsLocation'), concat('azuredeploy.sh', parameters('_artifactsLocationSasToken')))eReference": {
             "publisher": "[variables('imagePublisher')]",
             "offer": "[variables('imageOffer')]",
             "sku": "[variables('ubuntuOSVersion')]",
@@ -230,7 +230,7 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
               "fileUris": [
-                "[uri(parameters('_artifactsLocation'), concat('azuredeploy.sh', parameters('_artifactsLocationSasToken')))]"
+                "[https://raw.githubusercontent.com/UofT-EcoSystem/azure-quickstart-templates/master/slurm/azuredeploy.sh]"
               ]
             },
             "protectedSettings": {

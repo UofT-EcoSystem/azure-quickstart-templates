@@ -43,6 +43,7 @@ if ! [ -f /home/$ADMIN_USERNAME/.ssh/id_rsa ]; then
     sudo -u $ADMIN_USERNAME sh -c "ssh-keygen -f /home/$ADMIN_USERNAME/.ssh/id_rsa -t rsa -N ''"
 fi
 
+sudo apt-get update
 # Install sshpass to automate ssh-copy-id action
 sudo apt-get install sshpass -y >> /tmp/azuredeploy.log.$$ 2>&1
 
