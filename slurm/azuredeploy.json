@@ -51,11 +51,11 @@
     }
   },
   "variables": {
-    "dnsName": "[ concat('slurm-', uniqueString(resourceGroup().id))]",
+    "dnsName": "[concat('slurm-', uniqueString(resourceGroup().id))]",
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
     "ubuntuOSVersion": "16.04-LTS",
-    "publicIPAddressName": "publicip",
+    "publicIPAddressName": "gpusim-publicip",
     "vmNameMaster": "gpusim-master",
     "vmNameWorker": "gpusim-worker",
     "nicNameMaster": "gpusim-nic",
@@ -172,7 +172,7 @@
           }
         ]
       }
-    },uri(parameters('_artifactsLocation'), concat('azuredeploy.sh', parameters('_artifactsLocationSasToken')))
+    },
     {
       "apiVersion": "2017-03-30",
       "type": "Microsoft.Compute/virtualMachines",
@@ -191,7 +191,7 @@
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
-          "imaguri(parameters('_artifactsLocation'), concat('azuredeploy.sh', parameters('_artifactsLocationSasToken')))eReference": {
+          "imageReference": {
             "publisher": "[variables('imagePublisher')]",
             "offer": "[variables('imageOffer')]",
             "sku": "[variables('ubuntuOSVersion')]",
@@ -230,7 +230,7 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
               "fileUris": [
-                "[https://raw.githubusercontent.com/UofT-EcoSystem/azure-quickstart-templates/gpusim/slurm/azuredeploy.sh]"
+                "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/gpusim/slurm/azuredeploy.sh"
               ]
             },
             "protectedSettings": {
