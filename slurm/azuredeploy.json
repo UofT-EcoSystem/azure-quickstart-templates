@@ -230,7 +230,7 @@
             "autoUpgradeMinorVersion": true,
             "settings": {
               "fileUris": [
-                "[https://raw.githubusercontent.com/UofT-EcoSystem/azure-quickstart-templates/master/slurm/azuredeploy.sh]"
+                "[https://raw.githubusercontent.com/UofT-EcoSystem/azure-quickstart-templates/gpusim/slurm/azuredeploy.sh]"
               ]
             },
             "protectedSettings": {
